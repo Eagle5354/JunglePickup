@@ -1,32 +1,29 @@
-name: Build JunglePickup Plugin
+name: Build & Release JunglePickup Plugin
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up JDK 21
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
+          java-version: '17'
           distribution: 'temurin'
-          java-version: '21'
-
-      - name: Cache local Maven repository
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn clean package
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.JunglePickup }}
+          files: target/*.jar
