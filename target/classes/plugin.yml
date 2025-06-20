@@ -1,0 +1,12 @@
+name: JunglePickup
+version: 1.0
+main: me.junglepickup.JunglePickup
+api-version: 1.21
+commands:
+  junglepickup:
+    description: Toggle JunglePickup on or off
+    usage: /junglepickup <on|off>
+permissions:
+  junglepickup.use:
+    description: Allow auto pickup and use toggle command
+    default: true

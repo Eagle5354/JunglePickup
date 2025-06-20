@@ -1,0 +1,3 @@
+# JunglePickup Configuration
+# Enable or disable auto pickup globally
+enabled: true
